@@ -1,12 +1,12 @@
 # JSGetImageAsDataURL
 
-Simple library to get base64 encoded image from the user in browser just in one line:
+Simple ES6 library for browser to get base64 encoded images from the user just in one line:
 
 ```js
 const base64Image = await getImageAsDataURL();
 ```
 
-Also, image is cropped to the specified squared size.
+Also, images are cropped/zoomed to the specified size.
 
 This library is useful to get avatar from user in one line of code and then send it with other data in JSON.
 
@@ -58,4 +58,4 @@ To actually use this function you need an action from user. Otherwise browser wi
 </html>
 ```
 
-This page needs to be served, not opened as a file, because browser don't allow importing if page is opened as a file.
+This page needs to be served, not opened as a file, because browser doesn't allow importing scripts if page is opened as a file.
