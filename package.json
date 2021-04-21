@@ -1,7 +1,25 @@
 {
-    "name": "getImageAsDataURL",
-    "author": "KoroLion",
-    "version": "1.0.0",
-    "license": "MIT",
-    "private": false
+  "name": "@korolion/get-image-as-dataurl",
+  "author": "KoroLion",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": false,
+  "description": "Simple ES6 library for browser to get base64 encoded images from the user just in one line.",
+  "main": "getImageAsDataUrl.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KoroLion/JSGetImageAsDataURL.git"
+  },
+  "keywords": [
+    "browser",
+    "image",
+    "avatar"
+  ],
+  "bugs": {
+    "url": "https://github.com/KoroLion/JSGetImageAsDataURL/issues"
+  },
+  "homepage": "https://github.com/KoroLion/JSGetImageAsDataURL#readme"
 }
