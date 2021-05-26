@@ -2,18 +2,28 @@
 <head>
     <title>Example</title>
     <meta charset="utf-8">
+
+    <style>
+        img {
+            border: 1px solid orange;
+        }
+    </style>
 </head>
 <body>
     <div>
-        <img id="image" src="" alt="No image" style="width: 256px; height: 256px;">
+        <img id="image" src="" alt="No image">
     </div>
-    <button id="btn">Upload image</button>
+    <button id="btnCrop">Upload and crop image</button>
+    <button id="btnLoad">Upload image</button>
 
     <script type="module">
         import getImageAsDataURL from './getImageAsDataURL.js';
 
-        btn.addEventListener('click', async function () {
+        btnCrop.addEventListener('click', async function () {
             image.src = await getImageAsDataURL();
+        });
+        btnLoad.addEventListener('click', async function () {
+            image.src = await getImageAsDataURL(0);
         });
     </script>
 </body>

@@ -1,6 +1,6 @@
-const DEFAULT_ACCEPT = 'image/png, image/jpeg, image/bmp';
 const DEFAULT_SIZE = 256;
-const DEFAULT_MAX_FILE_SIZE_MB = 10;
+const DEFAULT_ACCEPT = ['image/png', 'image/jpeg', 'image/bmp'];
+const DEFAULT_MAX_FILE_SIZE_MB = 5;
 const MB = 1024 * 1024;
 
 const TEMP_EL_ID = 'filesImageInput';
@@ -19,15 +19,15 @@ const createCanvas = (width, height) => {
  * Opens user file selection (with filter to images) dialog and returns dataURL of selected image
  * image is cropped to the specified size
  *
- * @param {string} accept string with allowed mime types divided by coma
- * @param {number} size size of resulting image (square size x size)
+ * @param {number} size size to fit image in (square size x size), if null => dataUrl with the size of an image
+ * @param {object} accept list with allowed mime types
  * @param {number} maxFileSizeMB maximum allowed file size
  * @returns {string} Data url of image selected by user
  */
 export const getImageAsDataURL = async (
-    accept = DEFAULT_ACCEPT,
     size = DEFAULT_SIZE,
-    maxFileSizeMB = DEFAULT_MAX_FILE_SIZE_MB
+    accept = DEFAULT_ACCEPT,
+    maxFileSizeMB = DEFAULT_MAX_FILE_SIZE_MB,
 ) => {
     const createImageInput = (changeCallback) => {
         let hasInp = true;
@@ -38,7 +38,7 @@ export const getImageAsDataURL = async (
         }
         imageInput.id = TEMP_EL_ID;
         imageInput.type = 'file';
-        imageInput.accept = accept;
+        imageInput.accept = accept.join(', ');
         imageInput.addEventListener('change', changeCallback);
 
         imageInput.style.display = 'none';
@@ -77,19 +77,26 @@ export const getImageAsDataURL = async (
 
             const reader = new FileReader();
             reader.addEventListener('load', (e) => {
+                const dataUrl = e.target.result;
+
+                if (!size) {
+                    resolve(dataUrl);
+                    return;
+                }
+
                 const img = new Image();
                 img.addEventListener('load', () => {
-                    const { canvas, ctx } = createCanvas(size, size);
+                    const imgMinSize = Math.min(img.width, img.height);
 
-                    const imgSize = Math.min(img.width, img.height);
-                    ctx.drawImage(img, 0, 0, imgSize, imgSize, 0, 0, canvas.width, canvas.height);
+                    const { canvas, ctx } = createCanvas(size, size);
+                    ctx.drawImage(img, 0, 0, imgMinSize, imgMinSize, 0, 0, canvas.width, canvas.height);
 
                     const dataURL = canvas.toDataURL();
                     canvas.remove();
 
                     resolve(dataURL);
                 });
-                img.src = e.target.result;
+                img.src = dataUrl;
             });
             reader.addEventListener('error', (e) => {
                 reject(new Error('Unable to read file!'));
