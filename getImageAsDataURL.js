@@ -85,7 +85,9 @@ const inputImageToDataURL = (inputImage, cropSize, compressSize, maxFileSizeMB) 
                     canvas.remove();
 
                     img.src = dataURL;
+                    img.height = img.width = Math.min(cropSize, imgMinSize);
                 }
+
                 if (compressSize) {
                     const imgMinSize = Math.min(img.width, img.height);
                     if (imgMinSize > compressSize) {
@@ -104,8 +106,8 @@ const inputImageToDataURL = (inputImage, cropSize, compressSize, maxFileSizeMB) 
                 }
 
                 resolve(img.src);
-            });
-        });
+            }, {once: true});
+        }, {once: true});
         reader.addEventListener('error', (e) => {
             reject(new Error('Unable to read file!'));
         });
