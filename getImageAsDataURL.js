@@ -96,11 +96,13 @@ const inputImageToDataURL = (inputImage, cropSize, compressSize, maxFileSizeMB) 
                         const newHeight = img.height / percents;
 
                         const {canvas, ctx} = createCanvas(newWidth, newHeight);
-                        ctx.drawImage(img, 0, 0, newWidth, newHeight, 0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
                         const dataURL = canvas.toDataURL();
                         canvas.remove();
 
+                        img.width = newWidth;
+                        img.height = newHeight;
                         img.src = dataURL;
                     }
                 }
