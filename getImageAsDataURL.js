@@ -125,7 +125,7 @@ const inputImageToDataURL = (inputImage, cropSize, compressSize, maxFileSizeMB) 
  * @param {number} compressSize size to compress the longest side in, if null => dataUrl with the size of an original image
  * @param {object} accept list with allowed mime types
  * @param {number} maxFileSizeMB maximum allowed file size
- * @returns {string} Data url of image selected by user
+ * @returns {Promise[string]} Data url of image selected by user
  */
 export const getImageAsDataURL = async (
     cropSize = DEFAULT_CROP_SIZE,
@@ -158,10 +158,10 @@ export const getImageAsDataURL = async (
  * @returns {string} Data url of image loaded by user
  */
 export const getLoadedImageAsDataURL = async (
-  dataTransfer,
-  cropSize = DEFAULT_CROP_SIZE,
-  compressSize = DEFAULT_COMPRESS_SIZE,
-  maxFileSizeMB = DEFAULT_MAX_FILE_SIZE_MB,
+    dataTransfer,
+    cropSize = DEFAULT_CROP_SIZE,
+    compressSize = DEFAULT_COMPRESS_SIZE,
+    maxFileSizeMB = DEFAULT_MAX_FILE_SIZE_MB,
 ) => {
     return inputImageToDataURL(dataTransfer, cropSize, compressSize, maxFileSizeMB);
 };
